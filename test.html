@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #87CEEB, #1E90FF);
+            font-family: Arial, sans-serif;
+        }
+        
+        canvas {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="test-canvas" width="600" height="800"></canvas>
+    
+    <script>
+        // Класс для создания пузырей
+        class TestBubble {
+            constructor(x, y, radius, color, borderColor) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.color = color;
+                this.borderColor = borderColor;
+            }
+            
+            draw(ctx) {
+                // Добавляем тень для лучшей видимости
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 2;
+                ctx.shadowOffsetY = 2;
+
+                // Рисуем основной пузырь
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                
+                // Отключаем тень для границы
+                ctx.shadowColor = 'transparent';
+                
+                // Рисуем границу пузыря
+                ctx.strokeStyle = this.borderColor;
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                
+                // Рисуем блик на пузыре
+                ctx.beginPath();
+                ctx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.2, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.fill();
+            }
+        }
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('test-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Создаем несколько тестовых пузырей
+            const bubbles = [
+                new TestBubble(150, 150, 40, 'rgba(0, 100, 255, 0.8)', 'rgba(0, 70, 225, 1.0)'),
+                new TestBubble(300, 200, 50, 'rgba(255, 215, 0, 0.8)', 'rgba(225, 185, 0, 1.0)'),
+                new TestBubble(450, 150, 45, 'rgba(255, 0, 255, 0.8)', 'rgba(225, 0, 225, 1.0)'),
+                new TestBubble(200, 300, 60, 'rgba(255, 0, 0, 0.8)', 'rgba(225, 0, 0, 1.0)'),
+                new TestBubble(400, 350, 35, 'rgba(0, 100, 255, 0.8)', 'rgba(0, 70, 225, 1.0)')
+            ];
+            
+            // Отрисовываем пузыри
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                bubbles.forEach(bubble => {
+                    bubble.draw(ctx);
+                });
+                
+                // Добавляем текст
+                ctx.font = '24px Arial';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 5;
+                ctx.fillText('Тестовые пузыри', canvas.width / 2, 50);
+                
+                requestAnimationFrame(draw);
+            }
+            
+            // Запускаем отрисовку
+            draw();
+        });
+    </script>
+</body>
+</html>

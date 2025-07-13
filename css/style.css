@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(to bottom, #87CEEB, #1E90FF);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    max-height: 600px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #FF6B6B;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    font-size: 2.5rem;
+    color: #FF6B6B;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button {
+    background-color: #4ECDC4;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #FF6B6B;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#game-canvas {
+    width: 100%;
+    height: calc(100% - 60px);
+    background-color: rgba(255, 255, 255, 0.3); /* Полупрозрачный белый фон */
+    border-radius: 0 0 10px 10px; /* Скругленные углы снизу */
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1); /* Внутренняя тень */
+}
+
+.game-header {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom: 2px solid #4ECDC4;
+}
+
+.score, .level {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.progress-container {
+    width: 40%;
+    height: 15px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #FF6B6B;
+    transition: width 0.3s ease;
+}
+
+#pause-button {
+    padding: 5px 15px;
+    font-size: 0.9rem;
+}
+
+.setting, .stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-width: 300px;
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+select, input[type="checkbox"] {
+    margin-left: 10px;
+}
+
+.final-score {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    color: #333;
+    font-weight: bold;
+}

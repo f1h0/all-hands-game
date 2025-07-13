@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Pop Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div id="start-screen" class="screen">
+            <h1>Bubble Pop</h1>
+            <button id="start-button">Начать игру</button>
+            <button id="settings-button">Настройки</button>
+            <button id="stats-button">Статистика</button>
+        </div>
+        
+        <div id="game-screen" class="screen hidden">
+            <div class="game-header">
+                <div class="score">Очки: <span id="score">0</span></div>
+                <div class="level">Уровень: <span id="level">1</span></div>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <button id="pause-button">Пауза</button>
+            </div>
+            <canvas id="game-canvas"></canvas>
+        </div>
+        
+        <div id="pause-screen" class="screen hidden">
+            <h2>Пауза</h2>
+            <button id="resume-button">Продолжить</button>
+            <button id="restart-button">Начать заново</button>
+            <button id="exit-button">Выйти в меню</button>
+        </div>
+        
+        <div id="game-over-screen" class="screen hidden">
+            <h2>Игра окончена</h2>
+            <div class="final-score">Ваш счет: <span id="final-score">0</span></div>
+            <button id="play-again-button">Играть снова</button>
+            <button id="main-menu-button">Главное меню</button>
+        </div>
+        
+        <div id="settings-screen" class="screen hidden">
+            <h2>Настройки</h2>
+            <div class="setting">
+                <label for="sound-toggle">Звук:</label>
+                <input type="checkbox" id="sound-toggle" checked>
+            </div>
+            <div class="setting">
+                <label for="music-toggle">Музыка:</label>
+                <input type="checkbox" id="music-toggle" checked>
+            </div>
+            <div class="setting">
+                <label for="difficulty">Сложность:</label>
+                <select id="difficulty">
+                    <option value="easy">Легкая</option>
+                    <option value="medium" selected>Средняя</option>
+                    <option value="hard">Сложная</option>
+                </select>
+            </div>
+            <button id="settings-back-button">Назад</button>
+        </div>
+        
+        <div id="stats-screen" class="screen hidden">
+            <h2>Статистика</h2>
+            <div class="stat">Всего игр: <span id="total-games">0</span></div>
+            <div class="stat">Лучший счет: <span id="best-score">0</span></div>
+            <div class="stat">Всего лопнуто пузырей: <span id="total-bubbles">0</span></div>
+            <div class="stat">Максимальный уровень: <span id="max-level">0</span></div>
+            <button id="stats-back-button">Назад</button>
+        </div>
+    </div>
+    
+    <script src="js/audio.js"></script>
+    <script src="js/bubble.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Pop Game (Auto Start)</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="score">Очки: <span id="score">0</span></div>
+                <div class="level">Уровень: <span id="level">1</span></div>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <button id="pause-button">Пауза</button>
+            </div>
+            <canvas id="game-canvas"></canvas>
+        </div>
+        
+        <div id="pause-screen" class="screen hidden">
+            <h2>Пауза</h2>
+            <button id="resume-button">Продолжить</button>
+            <button id="restart-button">Начать заново</button>
+            <button id="exit-button">Выйти в меню</button>
+        </div>
+        
+        <div id="game-over-screen" class="screen hidden">
+            <h2>Игра окончена</h2>
+            <div class="final-score">Ваш счет: <span id="final-score">0</span></div>
+            <button id="play-again-button">Играть снова</button>
+            <button id="main-menu-button">Главное меню</button>
+        </div>
+        
+        <div id="start-screen" class="screen hidden">
+            <h1>Bubble Pop</h1>
+            <button id="start-button">Начать игру</button>
+            <button id="settings-button">Настройки</button>
+            <button id="stats-button">Статистика</button>
+        </div>
+        
+        <div id="settings-screen" class="screen hidden">
+            <h2>Настройки</h2>
+            <div class="settings-option">
+                <label for="sound-toggle">Звуки:</label>
+                <input type="checkbox" id="sound-toggle" checked>
+            </div>
+            <div class="settings-option">
+                <label for="music-toggle">Музыка:</label>
+                <input type="checkbox" id="music-toggle" checked>
+            </div>
+            <div class="settings-option">
+                <label for="difficulty">Сложность:</label>
+                <select id="difficulty">
+                    <option value="easy">Легкая</option>
+                    <option value="medium" selected>Средняя</option>
+                    <option value="hard">Сложная</option>
+                </select>
+            </div>
+            <button id="settings-back-button">Назад</button>
+        </div>
+        
+        <div id="stats-screen" class="screen hidden">
+            <h2>Статистика</h2>
+            <div class="stats-item">Всего игр: <span id="total-games">0</span></div>
+            <div class="stats-item">Лучший счет: <span id="best-score">0</span></div>
+            <div class="stats-item">Всего лопнуто пузырей: <span id="total-bubbles">0</span></div>
+            <div class="stats-item">Максимальный уровень: <span id="max-level">1</span></div>
+            <button id="stats-back-button">Назад</button>
+        </div>
+    </div>
+    
+    <script src="js/audio.js"></script>
+    <script src="js/bubble.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script>
+        // Автоматически запускаем игру при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Auto-start page loaded');
+            
+            // Получаем элемент канваса
+            const canvas = document.getElementById('game-canvas');
+            console.log('Canvas element:', canvas);
+            
+            // Создаем экземпляр игры
+            const game = new Game(canvas);
+            console.log('Game instance created');
+            
+            // Создаем экземпляр UI
+            const ui = new UI(game);
+            console.log('UI instance created');
+            
+            // Автоматически запускаем игру
+            console.log('Auto-starting game...');
+            game.start();
+            console.log('Game auto-started!');
+            
+            // Обработчик клавиш для управления игрой с клавиатуры
+            document.addEventListener('keydown', (e) => {
+                console.log('Key pressed:', e.key);
+                // Пауза по клавише Escape
+                if (e.key === 'Escape') {
+                    if (game.isPaused) {
+                        ui.resumeGame();
+                    } else if (!game.isGameOver) {
+                        ui.pauseGame();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
