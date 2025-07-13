@@ -14,13 +14,15 @@ class UI {
             pause: document.getElementById('pause-screen'),
             gameOver: document.getElementById('game-over-screen'),
             settings: document.getElementById('settings-screen'),
-            stats: document.getElementById('stats-screen')
+            stats: document.getElementById('stats-screen'),
+            help: document.getElementById('help-screen')
         };
         
         this.buttons = {
             start: document.getElementById('start-button'),
             settings: document.getElementById('settings-button'),
             stats: document.getElementById('stats-button'),
+            help: document.getElementById('help-button'),
             pause: document.getElementById('pause-button'),
             resume: document.getElementById('resume-button'),
             restart: document.getElementById('restart-button'),
@@ -28,7 +30,8 @@ class UI {
             playAgain: document.getElementById('play-again-button'),
             mainMenu: document.getElementById('main-menu-button'),
             settingsBack: document.getElementById('settings-back-button'),
-            statsBack: document.getElementById('stats-back-button')
+            statsBack: document.getElementById('stats-back-button'),
+            helpBack: document.getElementById('help-back-button')
         };
         
         this.settings = {
@@ -56,6 +59,7 @@ class UI {
         this.buttons.start.addEventListener('click', () => this.startGame());
         this.buttons.settings.addEventListener('click', () => this.showScreen('settings'));
         this.buttons.stats.addEventListener('click', () => this.showStatsScreen());
+        this.buttons.help.addEventListener('click', () => this.showScreen('help'));
         
         // Кнопки на игровом экране
         this.buttons.pause.addEventListener('click', () => this.pauseGame());
@@ -74,6 +78,9 @@ class UI {
         
         // Кнопки на экране статистики
         this.buttons.statsBack.addEventListener('click', () => this.showScreen('start'));
+        
+        // Кнопки на экране помощи
+        this.buttons.helpBack.addEventListener('click', () => this.showScreen('start'));
         
         // Обработчики изменения настроек
         this.settings.sound.addEventListener('change', () => this.updateSettings());

@@ -534,39 +534,6 @@ class Game {
         this.saveStats();
         this.saveSecrets();
     }
-        
-        // Чит-код "immortal" - бесконечные жизни
-        else if (this.secretCodeInput.endsWith('immortal')) {
-            // Устанавливаем флаг бессмертия
-            this.isImmortal = true;
-            this.lives = 999;
-            
-            // Показываем уведомление
-            this.showSecretCodeNotification('ЧИТ-КОД "IMMORTAL" АКТИВИРОВАН!');
-            this.secretCodeInput = '';
-            this.saveSecrets();
-            
-            // Разблокируем достижение
-            this.unlockAchievement('immortal', 'Бессмертие', 'Вы активировали режим бессмертия!');
-        }
-        
-        // Чит-код "points" - мгновенно добавляет 1000 очков
-        else if (this.secretCodeInput.endsWith('points')) {
-            // Добавляем очки
-            this.score += 1000;
-            this.levelProgress += 1000;
-            
-            // Обновляем UI
-            document.getElementById('score').textContent = this.score;
-            
-            // Проверяем переход на следующий уровень
-            this.checkLevelUp();
-            
-            // Показываем уведомление
-            this.showSecretCodeNotification('ЧИТ-КОД "POINTS" АКТИВИРОВАН! +1000 ОЧКОВ');
-            this.secretCodeInput = '';
-        }
-    }
     
     /**
      * Разблокирует все достижения
