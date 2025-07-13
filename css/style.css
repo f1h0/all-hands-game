@@ -146,3 +146,88 @@ select, input[type="checkbox"] {
     color: #333;
     font-weight: bold;
 }
+
+/* Стили для экрана помощи */
+.help-content {
+    width: 90%;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.help-content h3 {
+    color: #4ECDC4;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.help-content p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.help-content ul {
+    margin-bottom: 15px;
+    padding-left: 20px;
+    color: #333;
+}
+
+.help-content li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.help-content strong {
+    color: #FF6B6B;
+    font-weight: bold;
+}
+
+.help-content kbd {
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    color: #333;
+    display: inline-block;
+    font-size: 0.85em;
+    font-family: monospace;
+    line-height: 1;
+    padding: 2px 4px;
+    margin: 0 2px;
+    white-space: nowrap;
+}
+
+.secret-hint {
+    color: #FF6B6B;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.version-tag {
+    font-size: 1rem;
+    color: #4ECDC4;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.glow-button {
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px rgba(78, 205, 196, 0.5); }
+    to { box-shadow: 0 0 20px rgba(78, 205, 196, 1); }
+}

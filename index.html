@@ -3,16 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble Pop Game</title>
+    <title>Bubble Pop Game - Улучшенная версия</title>
+    <meta name="description" content="Увлекательная игра в лопание пузырей с множеством секретных возможностей и пасхалок!">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Добавлены мета-теги для SEO и социальных сетей -->
+    <meta property="og:title" content="Bubble Pop Game">
+    <meta property="og:description" content="Игра с пасхалками и чит-кодами">
+    <meta property="og:type" content="website">
 </head>
 <body>
     <div class="game-container">
         <div id="start-screen" class="screen">
             <h1>Bubble Pop</h1>
-            <button id="start-button">Начать игру</button>
+            <div class="version-tag">Улучшенная версия с пасхалками</div>
+            <button id="start-button" class="glow-button">Начать игру</button>
             <button id="settings-button">Настройки</button>
             <button id="stats-button">Статистика</button>
+            <button id="help-button">Помощь</button>
+        </div>
+        
+        <div id="help-screen" class="screen hidden">
+            <h2>Помощь и секреты</h2>
+            <div class="help-content">
+                <h3>Как играть:</h3>
+                <p>Кликайте по пузырям, чтобы лопать их и набирать очки. Не позволяйте пузырям улететь!</p>
+                
+                <h3>Секретные чит-коды:</h3>
+                <p>В игре есть секретные чит-коды, которые можно вводить во время игры с клавиатуры:</p>
+                <ul>
+                    <li><strong>bubble</strong> - разблокирует радужный режим (нажмите <kbd>R</kbd> для активации)</li>
+                    <li><strong>pop</strong> - разблокирует специальные эффекты (нажмите <kbd>A</kbd> для антигравитации)</li>
+                    <li><strong>combo</strong> - разблокирует супер-комбо (нажмите <kbd>ПРОБЕЛ</kbd> для активации)</li>
+                    <li><strong>hover</strong> - режим наведения (лопайте пузыри без клика, переключайте клавишей <kbd>H</kbd>)</li>
+                    <li><strong>glass</strong> - стеклянные полупрозрачные пузыри (переключайте клавишей <kbd>L</kbd>)</li>
+                    <li><strong>godmode</strong> - активирует все преимущества сразу</li>
+                </ul>
+                <p class="secret-hint">Есть и другие секретные коды... Попробуйте их найти!</p>
+            </div>
+            <button id="help-back-button">Назад</button>
         </div>
         
         <div id="game-screen" class="screen hidden">
