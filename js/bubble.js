@@ -283,8 +283,43 @@ class Bubble {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         
+        // Проверяем, активирован ли режим стеклянных пузырей
+        if (this.game && this.game.easterEggs && this.game.easterEggs.glassMode) {
+            // Создаем градиент для стеклянного эффекта
+            const gradient = ctx.createRadialGradient(
+                this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.1,
+                this.x, this.y, this.radius
+            );
+            
+            // Определяем базовый цвет для стеклянного эффекта
+            let baseColor;
+            if (this.isRainbow || (this.game && this.game.easterEggs && this.game.easterEggs.rainbowMode)) {
+                const hue = (Date.now() * 0.1 + this.x + this.y) % 360;
+                baseColor = `hsl(${hue}, 100%, 70%)`;
+            } else {
+                // Извлекаем RGB компоненты из цвета пузыря
+                const colorMatch = this.color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
+                if (colorMatch) {
+                    const r = parseInt(colorMatch[1]);
+                    const g = parseInt(colorMatch[2]);
+                    const b = parseInt(colorMatch[3]);
+                    baseColor = `rgba(${r}, ${g}, ${b}, 0.7)`;
+                } else {
+                    baseColor = this.color;
+                }
+            }
+            
+            // Создаем стеклянный эффект с градиентом и прозрачностью
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)'); // Блик
+            gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.5)');
+            gradient.addColorStop(0.5, baseColor.replace(')', ', 0.6)').replace('rgb', 'rgba'));
+            gradient.addColorStop(1, baseColor.replace(')', ', 0.4)').replace('rgb', 'rgba'));
+            
+            ctx.fillStyle = gradient;
+            ctx.globalAlpha = 0.8; // Делаем пузырь полупрозрачным
+        } 
         // Если активирован радужный режим, создаем радужный градиент
-        if (this.isRainbow || (this.game && this.game.easterEggs && this.game.easterEggs.rainbowMode)) {
+        else if (this.isRainbow || (this.game && this.game.easterEggs && this.game.easterEggs.rainbowMode)) {
             const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
             const hue = (Date.now() * 0.1 + this.x + this.y) % 360;
             gradient.addColorStop(0, `hsl(${hue}, 100%, 70%)`);
@@ -296,6 +331,24 @@ class Bubble {
         }
         
         ctx.fill();
+        
+        // Добавляем блик для стеклянного эффекта
+        if (this.game && this.game.easterEggs && this.game.easterEggs.glassMode) {
+            // Блик в верхней левой части
+            ctx.beginPath();
+            ctx.arc(this.x - this.radius * 0.3, this.y - this.radius * 0.3, this.radius * 0.2, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.fill();
+            
+            // Маленький блик
+            ctx.beginPath();
+            ctx.arc(this.x + this.radius * 0.2, this.y - this.radius * 0.1, this.radius * 0.1, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.fill();
+            
+            // Восстанавливаем прозрачность
+            ctx.globalAlpha = 1.0;
+        }
         
         // Отключаем тень для границы
         ctx.shadowColor = 'transparent';

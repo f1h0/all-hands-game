@@ -42,12 +42,16 @@ class Game {
             'money': false,   // Увеличивает очки в 10 раз
             'speed': false,   // Замедляет время навсегда
             'life': false,    // Дает бесконечные жизни
-            'master': false   // Разблокирует все коды сразу
+            'master': false,  // Разблокирует все коды сразу
+            'hover': false,   // Режим наведения (без кликов)
+            'glass': false    // Стеклянные пузыри
         };
         this.easterEggs = {
             'rainbowMode': false,    // Радужный режим
             'giantBubbles': false,   // Гигантские пузыри
             'antiGravity': false,    // Антигравитация
+            'hoverMode': false,      // Режим наведения
+            'glassMode': false,      // Стеклянные пузыри
             'superCombo': false,     // Супер-комбо
             'godMode': false,        // Режим бога
             'infiniteScore': false,  // Бесконечные очки
@@ -278,6 +282,9 @@ class Game {
         // Добавляем обработчик движения мыши для более отзывчивого интерфейса
         this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
         
+        // Обработчик наведения для режима hover
+        this.canvas.addEventListener('mousemove', (e) => this.handleHover(e));
+        
         // Обработчик касания для мобильных устройств
         this.canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -364,6 +371,28 @@ class Game {
                     this.activateEasterEgg('antiGravity');
                 }
                 break;
+                
+            case 'h':
+                // Быстрое переключение режима наведения, если разблокирован
+                if (this.secretCodes.hover) {
+                    this.easterEggs.hoverMode = !this.easterEggs.hoverMode;
+                    this.showSecretCodeNotification(this.easterEggs.hoverMode ? 
+                        '🖱️ Режим наведения ВКЛЮЧЕН!' : 
+                        '🖱️ Режим наведения ВЫКЛЮЧЕН!');
+                    this.saveSecrets();
+                }
+                break;
+                
+            case 'l':
+                // Быстрое переключение стеклянных пузырей, если разблокирован
+                if (this.secretCodes.glass) {
+                    this.easterEggs.glassMode = !this.easterEggs.glassMode;
+                    this.showSecretCodeNotification(this.easterEggs.glassMode ? 
+                        '✨ Стеклянные пузыри ВКЛЮЧЕНЫ!' : 
+                        '✨ Стеклянные пузыри ВЫКЛЮЧЕНЫ!');
+                    this.saveSecrets();
+                }
+                break;
         }
     }
     
@@ -395,6 +424,28 @@ class Game {
             this.saveSecrets();
         }
         
+        // Проверяем код "hover" - режим наведения
+        else if (this.secretCodeInput.endsWith('hover')) {
+            this.secretCodes.hover = true;
+            this.easterEggs.hoverMode = !this.easterEggs.hoverMode; // Переключаем режим
+            this.showSecretCodeNotification(this.easterEggs.hoverMode ? 
+                '🖱️ Режим наведения ВКЛЮЧЕН! Просто наводите на пузыри!' : 
+                '🖱️ Режим наведения ВЫКЛЮЧЕН! Вернулись к обычному режиму.');
+            this.secretCodeInput = '';
+            this.saveSecrets();
+        }
+        
+        // Проверяем код "glass" - стеклянные пузыри
+        else if (this.secretCodeInput.endsWith('glass')) {
+            this.secretCodes.glass = true;
+            this.easterEggs.glassMode = !this.easterEggs.glassMode; // Переключаем режим
+            this.showSecretCodeNotification(this.easterEggs.glassMode ? 
+                '✨ Режим стеклянных пузырей ВКЛЮЧЕН! Красота!' : 
+                '✨ Режим стеклянных пузырей ВЫКЛЮЧЕН!');
+            this.secretCodeInput = '';
+            this.saveSecrets();
+        }
+        
         // 🔥 СУПЕР ЧИТ-КОД "godmode" - активирует все возможные преимущества
         else if (this.secretCodeInput.endsWith('godmode')) {
             // Активируем все секретные коды
@@ -415,6 +466,8 @@ class Game {
             this.easterEggs.infiniteScore = true;
             this.easterEggs.timeWarp = true;
             this.easterEggs.immortal = true;
+            this.easterEggs.glassMode = true;   // Активируем стеклянные пузыри
+            this.easterEggs.hoverMode = true;   // Активируем режим наведения
             
             // Даем игроку МЕГА преимущества
             this.lives = 999;
@@ -469,6 +522,30 @@ class Game {
             this.showSecretCodeNotification('❤️ ЧИТ-КОД "LIFE" АКТИВИРОВАН! ❤️\nТеперь у вас 99 жизней!');
             this.secretCodeInput = '';
             this.saveSecrets();
+        }
+        
+        // 🖱️ ЧИТ-КОД "hover" - режим наведения (без кликов)
+        else if (this.secretCodeInput.endsWith('hover')) {
+            this.secretCodes.hover = true;
+            this.easterEggs.hoverMode = true;
+            
+            this.showSecretCodeNotification('🖱️ РЕЖИМ НАВЕДЕНИЯ АКТИВИРОВАН!\nПросто наводите мышь на пузыри!');
+            this.secretCodeInput = '';
+            this.saveSecrets();
+            
+            this.unlockAchievement('hover_mode', 'Режим наведения', 'Теперь можно лопать пузыри наведением!');
+        }
+        
+        // 💎 ЧИТ-КОД "glass" - стеклянные полупрозрачные пузыри
+        else if (this.secretCodeInput.endsWith('glass')) {
+            this.secretCodes.glass = true;
+            this.easterEggs.glassMode = true;
+            
+            this.showSecretCodeNotification('💎 СТЕКЛЯННЫЕ ПУЗЫРИ АКТИВИРОВАНЫ!\nКрасивый эффект стекла!');
+            this.secretCodeInput = '';
+            this.saveSecrets();
+            
+            this.unlockAchievement('glass_mode', 'Стеклянные пузыри', 'Пузыри теперь как настоящее стекло!');
         }
         
         // 👑 МАСТЕР ЧИТ-КОД "master" - разблокирует ВСЕ коды сразу
@@ -745,19 +822,69 @@ class Game {
         for (let i = 0; i < this.bubbles.length; i++) {
             const bubble = this.bubbles[i];
             
-            // Если курсор над пузырем, увеличиваем его немного для визуального эффекта
+            // Если курсор над пузырем
             if (bubble.containsPoint(x, y)) {
                 bubble.isHovered = true;
                 hoveredBubble = true;
                 this.canvas.style.cursor = 'pointer'; // Меняем курсор на указатель
+                
+                // Если активирован режим наведения, лопаем пузырь при наведении
+                if (this.easterEggs.hoverMode) {
+                    // Добавляем небольшую задержку для визуального эффекта
+                    if (!bubble.hoverTimer) {
+                        bubble.hoverTimer = setTimeout(() => {
+                            this.popBubble(bubble, i);
+                            bubble.hoverTimer = null;
+                        }, 100); // 100мс задержка перед лопанием
+                    }
+                }
             } else {
                 bubble.isHovered = false;
+                // Если курсор ушел с пузыря, отменяем таймер
+                if (bubble.hoverTimer) {
+                    clearTimeout(bubble.hoverTimer);
+                    bubble.hoverTimer = null;
+                }
             }
         }
         
         // Если курсор не над пузырем, возвращаем стандартный курсор
         if (!hoveredBubble) {
             this.canvas.style.cursor = 'default';
+        }
+    }
+    
+    /**
+     * Обрабатывает наведение мыши для режима hover
+     * @param {MouseEvent} e - Событие движения мыши
+     */
+    handleHover(e) {
+        // Режим наведения работает только если активирован
+        if (!this.easterEggs.hoverMode || this.isPaused || this.isGameOver) return;
+        
+        const rect = this.canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Проверяем пузыри на наведение
+        for (let i = this.bubbles.length - 1; i >= 0; i--) {
+            const bubble = this.bubbles[i];
+            
+            if (bubble.containsPoint(x, y)) {
+                // Если еще не начали процесс лопания
+                if (!bubble.hoverStartTime) {
+                    bubble.hoverStartTime = Date.now();
+                }
+                
+                // Лопаем пузырь через 200мс наведения
+                if (Date.now() - bubble.hoverStartTime > 200) {
+                    this.popBubble(bubble, i);
+                    return; // Лопаем только один пузырь за раз
+                }
+            } else {
+                // Сбрасываем таймер если курсор ушел
+                bubble.hoverStartTime = null;
+            }
         }
     }
     

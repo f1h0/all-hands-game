@@ -170,6 +170,37 @@ select, input[type="checkbox"] {
     color: #333;
 }
 
+.help-content ul {
+    margin-bottom: 15px;
+    padding-left: 20px;
+    color: #333;
+}
+
+.help-content li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.help-content strong {
+    color: #FF6B6B;
+    font-weight: bold;
+}
+
+.help-content kbd {
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    color: #333;
+    display: inline-block;
+    font-size: 0.85em;
+    font-family: monospace;
+    line-height: 1;
+    padding: 2px 4px;
+    margin: 0 2px;
+    white-space: nowrap;
+}
+
 .secret-hint {
     color: #FF6B6B;
     font-style: italic;
